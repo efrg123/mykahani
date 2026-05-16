@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -58,16 +59,21 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+923001234567"
-              className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-teal-700 transition-colors"
+              href={whatsappLink(whatsappMessages.booking)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-green-600 transition-colors"
             >
-              <Phone className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4" />
               <span>0300-1234567</span>
             </a>
             <a
-              href="#contact"
+              href={whatsappLink(whatsappMessages.booking)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-9 px-6 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
             >
+              <MessageCircle className="w-4 h-4 mr-1.5" />
               Book Session
             </a>
           </div>
@@ -103,18 +109,23 @@ export default function Navbar() {
                 </nav>
                 <div className="mt-auto pb-8 flex flex-col gap-3">
                   <a
-                    href="tel:+923001234567"
+                    href={whatsappLink(whatsappMessages.booking)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 text-sm font-medium text-slate-600"
                   >
-                    <Phone className="w-4 h-4" />
+                    <MessageCircle className="w-4 h-4" />
                     <span>0300-1234567</span>
                   </a>
                   <a
-                    href="#contact"
+                    href={whatsappLink(whatsappMessages.booking)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => setOpen(false)}
                     className="inline-flex items-center justify-center w-full h-9 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
                   >
-                    Book Session
+                    <MessageCircle className="w-4 h-4 mr-1.5" />
+                    Book on WhatsApp
                   </a>
                 </div>
               </div>

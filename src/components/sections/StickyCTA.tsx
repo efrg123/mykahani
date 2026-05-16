@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Phone, X } from "lucide-react";
+import { Phone, X, MessageCircle } from "lucide-react";
+import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
 
 export default function StickyCTA() {
   const [visible, setVisible] = useState(false);
@@ -34,17 +35,20 @@ export default function StickyCTA() {
         </div>
         <div className="flex items-center gap-2">
           <a
-            href="tel:+923001234567"
-            className="inline-flex items-center justify-center h-10 px-5 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
+            href={whatsappLink(whatsappMessages.booking)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center h-10 px-4 bg-green-600 hover:bg-green-700 text-white rounded-full text-sm font-medium transition-colors"
           >
-            <Phone className="w-4 h-4 mr-1.5" />
-            Call Now
+            <MessageCircle className="w-4 h-4 mr-1.5" />
+            WhatsApp
           </a>
           <a
-            href="#contact"
-            className="inline-flex items-center justify-center h-10 px-5 bg-slate-900 hover:bg-slate-800 text-white rounded-full text-sm font-medium transition-colors"
+            href="tel:+923001234567"
+            className="inline-flex items-center justify-center h-10 px-4 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
           >
-            Book
+            <Phone className="w-4 h-4 mr-1.5" />
+            Call
           </a>
         </div>
         <button

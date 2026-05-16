@@ -2,46 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Phone, Mail, MapPin, Clock, Check } from "lucide-react";
+import { useRef } from "react";
+import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
 
 export default function ContactCTA() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    interest: "Individual Therapy",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim())
-      newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
-    }
-    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validate()) {
-      setSubmitted(true);
-      // TODO: Wire to backend / CRM / Zapier / WhatsApp API
-    }
-  };
 
   return (
     <section id="contact" className="bg-teal-900 text-white py-20 lg:py-28" ref={ref}>
@@ -67,6 +34,20 @@ export default function ContactCTA() {
 
             <div className="space-y-4 mb-10">
               <a
+                href={whatsappLink(whatsappMessages.booking)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group"
+              >
+                <div className="w-10 h-10 rounded-lg bg-teal-800 flex items-center justify-center group-hover:bg-teal-700 transition-colors">
+                  <MessageCircle className="w-5 h-5 text-teal-300" />
+                </div>
+                <div>
+                  <div className="text-sm text-teal-300">WhatsApp</div>
+                  <div className="font-semibold">0300-1234567</div>
+                </div>
+              </a>
+              <a
                 href="tel:+923001234567"
                 className="flex items-center gap-4 group"
               >
@@ -74,7 +55,7 @@ export default function ContactCTA() {
                   <Phone className="w-5 h-5 text-teal-300" />
                 </div>
                 <div>
-                  <div className="text-sm text-teal-300">Call or WhatsApp</div>
+                  <div className="text-sm text-teal-300">Call us</div>
                   <div className="font-semibold">0300-1234567</div>
                 </div>
               </a>
@@ -114,17 +95,20 @@ export default function ContactCTA() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="tel:+923001234567"
+                href={whatsappLink(whatsappMessages.booking)}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center h-11 px-8 bg-white text-teal-900 hover:bg-teal-50 rounded-full text-base font-medium transition-colors"
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Chat on WhatsApp
+              </a>
+              <a
+                href="tel:+923001234567"
+                className="inline-flex items-center justify-center h-11 px-8 border border-teal-600 text-white hover:bg-teal-800 rounded-full text-base font-medium transition-colors"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 Call Now
-              </a>
-              <a
-                href="mailto:hello@mykahani.pk"
-                className="inline-flex items-center justify-center h-11 px-8 border border-teal-600 text-white hover:bg-teal-800 rounded-full text-base font-medium transition-colors"
-              >
-                Send an Inquiry
               </a>
             </div>
           </motion.div>
@@ -135,153 +119,51 @@ export default function ContactCTA() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative"
           >
-            <div className="bg-white rounded-3xl p-8 lg:p-10 text-slate-900">
-              {!submitted ? (
-                <>
-                  <h3 className="text-2xl font-bold mb-2">
-                    Request a Call Back
-                  </h3>
-                  <p className="text-slate-600 mb-6">
-                    Fill out the form below and our team will reach out within
-                    24 hours.
-                  </p>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
-                          First Name *
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.firstName}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              firstName: e.target.value,
-                            })
-                          }
-                          className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          placeholder="Your name"
-                        />
-                        {errors.firstName && (
-                          <p className="text-xs text-red-500 mt-1">
-                            {errors.firstName}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">
-                          Last Name *
-                        </label>
-                        <input
-                          type="text"
-                          value={formData.lastName}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              lastName: e.target.value,
-                            })
-                          }
-                          className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          placeholder="Your last name"
-                        />
-                        {errors.lastName && (
-                          <p className="text-xs text-red-500 mt-1">
-                            {errors.lastName}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                        placeholder="you@example.com"
-                      />
-                      {errors.email && (
-                        <p className="text-xs text-red-500 mt-1">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Phone *
-                      </label>
-                      <input
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) =>
-                          setFormData({ ...formData, phone: e.target.value })
-                        }
-                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                        placeholder="03XX-XXXXXXX"
-                      />
-                      {errors.phone && (
-                        <p className="text-xs text-red-500 mt-1">
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
-                        I am interested in
-                      </label>
-                      <select
-                        value={formData.interest}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            interest: e.target.value,
-                          })
-                        }
-                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
-                      >
-                        <option>Individual Therapy</option>
-                        <option>Couples Counseling</option>
-                        <option>Corporate Wellness</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full bg-teal-700 hover:bg-teal-800 text-white rounded-full py-3 text-base font-medium transition-colors"
-                    >
-                      Request Call Back
-                    </button>
-                    <p className="text-xs text-slate-500 text-center">
-                      Your information is kept strictly confidential.
-                    </p>
-                  </form>
-                </>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="w-14 h-14 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
-                    <Check className="w-7 h-7 text-teal-700" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    Request Sent
-                  </h3>
-                  <p className="text-slate-600 mb-6">
-                    Thank you! Our team will call you within 24 hours to book
-                    your session.
-                  </p>
-                  <a
-                    href="tel:+923001234567"
-                    className="inline-flex items-center justify-center h-11 px-8 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-base font-medium transition-colors"
-                  >
-                    <Phone className="w-4 h-4 mr-2" />
-                    Call Now
-                  </a>
-                </div>
-              )}
+            <div className="bg-white rounded-3xl p-8 lg:p-10 text-slate-900 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center mx-auto mb-5">
+                <MessageCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">
+                Start on WhatsApp
+              </h3>
+              <p className="text-slate-600 mb-6 max-w-sm mx-auto">
+                The fastest way to reach us. Send a message and our team will
+                guide you through booking your first session — usually within
+                minutes.
+              </p>
+
+              <a
+                href={whatsappLink(whatsappMessages.booking)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full h-12 bg-green-600 hover:bg-green-700 text-white rounded-full text-base font-medium transition-colors mb-4"
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Open WhatsApp
+              </a>
+
+              <p className="text-xs text-slate-500 mb-6">
+                Or save our number and message us anytime: <strong>0300-1234567</strong>
+              </p>
+
+              <div className="border-t border-slate-100 pt-6">
+                <p className="text-sm font-medium text-slate-900 mb-3">
+                  What happens next?
+                </p>
+                <ul className="space-y-2 text-left max-w-xs mx-auto">
+                  {[
+                    "We reply within minutes during working hours",
+                    "Discuss your concerns and match you with the right psychologist",
+                    "Choose a time that works for you — online or in-person",
+                    "Receive session confirmation and preparation guidance",
+                  ].map((step) => (
+                    <li key={step} className="flex items-start gap-2 text-sm text-slate-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-1.5 shrink-0" />
+                      {step}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </motion.div>
         </div>
