@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
+import { track_whatsapp_click } from "@/lib/tracking";
 
 export default function ContactCTA() {
   const ref = useRef(null);
@@ -98,6 +99,7 @@ export default function ContactCTA() {
                 href={whatsappLink(whatsappMessages.booking)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track_whatsapp_click("contact")}
                 className="inline-flex items-center justify-center h-11 px-8 bg-white text-teal-900 hover:bg-teal-50 rounded-full text-base font-medium transition-colors"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
@@ -136,6 +138,7 @@ export default function ContactCTA() {
                 href={whatsappLink(whatsappMessages.booking)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => track_whatsapp_click("contact")}
                 className="inline-flex items-center justify-center w-full h-12 bg-green-600 hover:bg-green-700 text-white rounded-full text-base font-medium transition-colors mb-4"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />

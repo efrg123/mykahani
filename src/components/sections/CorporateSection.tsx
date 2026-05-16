@@ -18,6 +18,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
+import { track_whatsapp_click } from "@/lib/tracking";
 
 const corporateServices = [
   {
@@ -251,6 +252,7 @@ export default function CorporateSection() {
               href={whatsappLink(whatsappMessages.corporate)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track_whatsapp_click("corporate")}
               className="inline-flex items-center justify-center w-full h-12 bg-green-600 hover:bg-green-700 text-white rounded-full text-base font-medium transition-colors mb-4"
             >
               <MessageCircle className="w-5 h-5 mr-2" />

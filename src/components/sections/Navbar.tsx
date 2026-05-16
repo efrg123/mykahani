@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
+import { track_whatsapp_click } from "@/lib/tracking";
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -71,6 +72,7 @@ export default function Navbar() {
               href={whatsappLink(whatsappMessages.booking)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track_whatsapp_click("nav")}
               className="inline-flex items-center justify-center h-9 px-6 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
             >
               <MessageCircle className="w-4 h-4 mr-1.5" />
@@ -121,7 +123,7 @@ export default function Navbar() {
                     href={whatsappLink(whatsappMessages.booking)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
+                    onClick={() => { setOpen(false); track_whatsapp_click("nav"); }}
                     className="inline-flex items-center justify-center w-full h-9 bg-teal-700 hover:bg-teal-800 text-white rounded-full text-sm font-medium transition-colors"
                   >
                     <MessageCircle className="w-4 h-4 mr-1.5" />

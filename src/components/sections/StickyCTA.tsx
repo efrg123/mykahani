@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Phone, X, MessageCircle } from "lucide-react";
 import { whatsappLink, whatsappMessages } from "@/lib/whatsapp";
+import { track_whatsapp_click } from "@/lib/tracking";
 
 export default function StickyCTA() {
   const [visible, setVisible] = useState(false);
@@ -38,6 +39,7 @@ export default function StickyCTA() {
             href={whatsappLink(whatsappMessages.booking)}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track_whatsapp_click("sticky")}
             className="inline-flex items-center justify-center h-10 px-4 bg-green-600 hover:bg-green-700 text-white rounded-full text-sm font-medium transition-colors"
           >
             <MessageCircle className="w-4 h-4 mr-1.5" />
